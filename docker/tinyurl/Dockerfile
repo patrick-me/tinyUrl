@@ -5,6 +5,9 @@ WORKDIR /tinyurl
 COPY generators ./generators
 COPY handlers ./handlers
 COPY storage ./storage
+COPY utils ./utils
+COPY db ./db
+
 COPY main.go ./
 COPY go.mod ./
 
