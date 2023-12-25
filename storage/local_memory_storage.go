@@ -6,28 +6,28 @@ import (
 )
 
 type LocalMemoryStorage struct {
-	mutex sync.Mutex
+	sync.RWMutex
 	Store map[string]string
 }
 
 func (s *LocalMemoryStorage) Contains(short string) bool {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
+	s.RLock()
+	defer s.RUnlock()
 
 	_, contains := s.Store[short]
 	return contains
 }
 
 func (s *LocalMemoryStorage) Save(short, origin string) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
+	s.Lock()
+	defer s.Unlock()
 
 	s.Store[short] = origin
 }
 
 func (s *LocalMemoryStorage) Get(short string) (string, error) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
+	s.RLock()
+	defer s.RUnlock()
 
 	if val, exists := s.Store[short]; exists {
 		return val, nil
