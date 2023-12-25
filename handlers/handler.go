@@ -10,10 +10,11 @@ import (
 )
 
 type UrlHandler struct {
-	Storage storage.Storage
+	Storage   storage.Storage
+	Generator generators.URLGenerator
 }
 
-func (h *UrlHandler) HandleFastHTTP(ctx *fasthttp.RequestCtx) {
+func (h *UrlHandler) Router(ctx *fasthttp.RequestCtx) {
 
 	if ctx.IsPost() {
 		switch string(ctx.Path()) {
@@ -63,15 +64,15 @@ func createShortUrlHandler(ctx *fasthttp.RequestCtx, h *UrlHandler) {
 		return
 	}
 
-	if !isUrlValid(urlRequest.Url) {
-		ctx.Error(fmt.Sprintf("URL should start with http(s)://, %q", urlRequest.Url), fasthttp.StatusBadRequest)
+	if valid, message := isUrlValid(urlRequest.Url); !valid {
+		ctx.Error(message, fasthttp.StatusBadRequest)
 		return
 	}
 
-	shortURL := generators.GenRandURL()
+	shortURL := h.Generator.GetRandURL()
 
 	for h.Storage.Contains(shortURL) {
-		shortURL = generators.GenRandURL()
+		shortURL = h.Generator.GetRandURL()
 	}
 	h.Storage.Save(shortURL, urlRequest.Url)
 
@@ -87,6 +88,16 @@ func createShortUrlHandler(ctx *fasthttp.RequestCtx, h *UrlHandler) {
 	}
 }
 
-func isUrlValid(url string) bool {
-	return strings.HasPrefix(url, "https://") || strings.HasPrefix(url, "http://")
+func isUrlValid(url string) (bool, string) {
+	url = strings.ToLower(url)
+
+	if !strings.HasPrefix(url, "https://") && !strings.HasPrefix(url, "http://") {
+		return false, fmt.Sprintf("URL should start with http(s)://, %q", url)
+	}
+
+	if strings.Contains(url, "localhost") || strings.Contains(url, "127.0.0.1") {
+		return false, fmt.Sprintf("URL isn't valid, %q", url)
+	}
+
+	return true, ""
 }
