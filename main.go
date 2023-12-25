@@ -1,8 +1,11 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"github.com/valyala/fasthttp"
+	"time"
+	"tinyUrl/db"
 	"tinyUrl/generators"
 	"tinyUrl/handlers"
 	"tinyUrl/storage"
@@ -14,13 +17,21 @@ func main() {
 }
 
 func startApp() {
+	fmt.Println("Starting app")
 	appHandler := &handlers.UrlHandler{
-		Storage: &storage.LocalMemoryStorage{
+		//TODO: add config to choose storage
+		/*Storage: &storage.LocalMemoryStorage{
 			Store: make(map[string]string),
+		},*/
+		Storage: &storage.RedisStorage{
+			Client:     db.CreateRedisClient(),
+			Context:    context.Background(),
+			Expiration: 48 * time.Hour,
 		},
 		Generator: &generators.SimpleRandGenerator{},
 	}
 
+	fmt.Println("Starting fasthttp")
 	err := fasthttp.ListenAndServe(
 		utils.GetEnv("APP_PORT", ":8080"),
 		fasthttp.CompressHandler(appHandler.Router),
