@@ -25,13 +25,5 @@ URL created!
 
 ## Docker usage
 
-#### Build
-
-
-> docker build -t tiny-001 .
-
-
-#### Run
-
-> docker run -dp 127.0.0.1:8080:8080 tiny-001
-
+#### Compose
+> docker-compose up

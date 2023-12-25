@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   tinyurl:
+    container_name: tinyurl_app
     build:
       context: ./
       dockerfile: docker/tinyurl/Dockerfile
@@ -11,9 +12,12 @@ services:
       DEFAULT_URL_LEN: 10
       REDIS_ADDR: "redis:6379"
       REDIS_PASSWORD: ""
+    ports:
+      - "8080:8080"
 
 
   redis:
+    container_name: tinyurl_redis
     hostname: redis
     build:
       context: ./
