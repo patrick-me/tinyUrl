@@ -18,8 +18,16 @@ services:
 
   redis:
     container_name: tinyurl_redis
+    command: redis-server --appendonly yes #saving written data to volume
     hostname: redis
     build:
       context: ./
       dockerfile: docker/redis/Dockerfile
     restart: always
+    volumes:
+      - redis-data:/data
+
+
+volumes:
+  redis-data:
+    driver: local
