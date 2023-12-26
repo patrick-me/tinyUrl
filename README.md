@@ -7,8 +7,7 @@ A simple tinyUrl
 
 #### Create URL
 
-
-> curl -d '{"url":"https://ya.ru"}' localhost:8080/short && echo
+> curl -d '{"url":"https://ya.ru"}' localhost/short && echo
 ```
 URL created!
 "{\"url\":\"https://ya.ru\",\"short\":\"kc6fc\"}"
@@ -16,11 +15,13 @@ URL created!
 
 #### Get URL
 
-> curl -L localhost:8080/kc6fc
+> curl -L localhost/kc6fc
 ```
 ... Redirect to https://ya.ru
 ```
 
+#### Default expiration
+- 48 hours
 ---
 
 ## Docker usage
