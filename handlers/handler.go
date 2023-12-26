@@ -40,10 +40,10 @@ func getHandler(ctx *fasthttp.RequestCtx, h *UrlHandler) {
 
 	if err != nil {
 		ctx.SetStatusCode(fasthttp.StatusNotFound)
-		_, err = fmt.Fprintf(ctx,
+		_, err2 := fmt.Fprintf(ctx,
 			"URL not found!\n%q\n", url)
 
-		if err != nil {
+		if err2 != nil {
 			fmt.Println("Error code #122")
 			return
 		}
