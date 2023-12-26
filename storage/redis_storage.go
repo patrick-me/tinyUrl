@@ -23,10 +23,14 @@ func (s *RedisStorage) Save(short, origin string) {
 	s.Client.Set(s.Context, short, origin, s.Expiration)
 }
 
-func (s *RedisStorage) Get(short string) (string, error) {
-	if val, err := s.Client.Get(s.Context, short).Result(); errors.Is(err, redis.Nil) {
+func (s *RedisStorage) Get(short string) (val string, err error) {
+	val, err = s.Client.Get(s.Context, short).Result()
+
+	if !errors.Is(err, redis.Nil) {
 		return val, nil
 	}
+
+	fmt.Printf("URL is not found: %s, err: %e\n", short, err)
 
 	return "", fmt.Errorf("URL is not found: %s", short)
 }

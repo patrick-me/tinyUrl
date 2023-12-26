@@ -13,7 +13,11 @@ services:
       REDIS_ADDR: "redis:6379"
       REDIS_PASSWORD: ""
     ports:
-      - "8080:8080"
+      - "80:8080"
+    networks:
+      - tinyurl-net
+    depends_on:
+      - redis
 
 
   redis:
@@ -26,8 +30,15 @@ services:
     restart: always
     volumes:
       - redis-data:/data
+    networks:
+      - tinyurl-net
 
 
 volumes:
   redis-data:
     driver: local
+
+
+networks:
+  tinyurl-net:
+    name: tinyurl-net
