@@ -1,4 +1,4 @@
-module tinyUrl
+module github.com/patrick-me/tinyUrl
 
 go 1.21
 
