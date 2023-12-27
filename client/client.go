@@ -47,6 +47,11 @@ func (c *TinyUrlClientImpl) CreateShortURL(original string, expirationInHours ti
 		return "", err
 	}
 
+	if resp.StatusCode >= 400 {
+		fmt.Printf("Error - status code: %d, %s, response body: %s\n", resp.StatusCode, resp.Status, respBody)
+		return "", fmt.Errorf("error - status code: %d, %s", resp.StatusCode, resp.Status)
+	}
+
 	var urlResp handlers.URLResponse
 	err = json.Unmarshal(respBody, &urlResp)
 
