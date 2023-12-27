@@ -28,3 +28,6 @@ URL created!
 
 #### Compose
 > docker-compose up
+
+To rebuild use this cmd
+> docker-compose -f docker-compose.yml up -d --no-deps --build

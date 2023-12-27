@@ -19,8 +19,8 @@ func (s *RedisStorage) Contains(short string) bool {
 	return !errors.Is(err, redis.Nil)
 }
 
-func (s *RedisStorage) Save(short, origin string) {
-	s.Client.Set(s.Context, short, origin, s.Expiration)
+func (s *RedisStorage) Save(short, origin string, expirationInHours time.Duration) {
+	s.Client.Set(s.Context, short, origin, expirationInHours*time.Hour)
 }
 
 func (s *RedisStorage) Get(short string) (val string, err error) {
