@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/patrick-me/tinyUrl/db"
+	"github.com/patrick-me/tinyUrl/generators"
+	"github.com/patrick-me/tinyUrl/handlers"
+	"github.com/patrick-me/tinyUrl/storage"
+	"github.com/patrick-me/tinyUrl/utils"
 	"github.com/valyala/fasthttp"
 	"time"
-	"tinyUrl/db"
-	"tinyUrl/generators"
-	"tinyUrl/handlers"
-	"tinyUrl/storage"
-	"tinyUrl/utils"
 )
 
 func main() {

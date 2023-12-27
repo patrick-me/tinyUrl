@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/patrick-me/tinyUrl/handlers"
 	"io"
 	"net/http"
 	"time"
-	"tinyUrl/handlers"
 )
 
 type TinyUrlClient interface {

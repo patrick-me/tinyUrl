@@ -1,8 +1,8 @@
 package db
 
 import (
+	"github.com/patrick-me/tinyUrl/utils"
 	"github.com/redis/go-redis/v9"
-	"tinyUrl/utils"
 )
 
 func CreateRedisClient() *redis.Client {

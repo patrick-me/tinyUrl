@@ -2,9 +2,9 @@ package generators
 
 import (
 	"fmt"
+	"github.com/patrick-me/tinyUrl/utils"
 	"math/rand"
 	"strconv"
-	"tinyUrl/utils"
 )
 
 const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
