@@ -3,10 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/patrick-me/tinyUrl/generators"
+	"github.com/patrick-me/tinyUrl/storage"
 	"github.com/valyala/fasthttp"
 	"strings"
-	"tinyUrl/generators"
-	"tinyUrl/storage"
 )
 
 type UrlHandler struct {
