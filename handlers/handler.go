@@ -79,13 +79,7 @@ func createShortUrlHandler(ctx *fasthttp.RequestCtx, h *UrlHandler) {
 	data, _ := json.Marshal(&URLResponse{Url: urlRequest.Url, Short: shortURL})
 
 	ctx.SetStatusCode(fasthttp.StatusCreated)
-	_, err = fmt.Fprintf(ctx,
-		"URL created!\n%q\n", string(data))
-
-	if err != nil {
-		fmt.Println("Error code #123")
-		return
-	}
+	ctx.SetBody(data)
 }
 
 func isUrlValid(url string) (bool, string) {

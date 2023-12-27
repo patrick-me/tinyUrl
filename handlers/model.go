@@ -1,7 +1,10 @@
 package handlers
 
+import "time"
+
 type URLRequest struct {
-	Url string `json:"url"`
+	Url               string        `json:"url"`
+	ExpirationInHours time.Duration `json:"expirationInHours"`
 }
 
 type URLResponse struct {

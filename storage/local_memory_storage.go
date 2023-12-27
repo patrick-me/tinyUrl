@@ -3,6 +3,7 @@ package storage
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
 type LocalMemoryStorage struct {
@@ -18,7 +19,7 @@ func (s *LocalMemoryStorage) Contains(short string) bool {
 	return contains
 }
 
-func (s *LocalMemoryStorage) Save(short, origin string) {
+func (s *LocalMemoryStorage) Save(short, origin string, _ time.Duration) {
 	s.Lock()
 	defer s.Unlock()
 
