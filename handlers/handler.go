@@ -74,7 +74,7 @@ func createShortUrlHandler(ctx *fasthttp.RequestCtx, h *UrlHandler) {
 	for h.Storage.Contains(shortURL) {
 		shortURL = h.Generator.GetRandURL()
 	}
-	h.Storage.Save(shortURL, urlRequest.Url)
+	h.Storage.Save(shortURL, urlRequest.Url, urlRequest.ExpirationInHours)
 
 	data, _ := json.Marshal(&URLResponse{Url: urlRequest.Url, Short: shortURL})
 
