@@ -10,12 +10,13 @@ A simple tinyUrl
 > curl -d '{"url":"https://ya.ru"}' localhost/api/v1/shortUrl && echo
 ```
 URL created!
-"{\"url\":\"https://ya.ru\",\"short\":\"kc6fc\"}"
+{"shortUrl":"http://localhost/Ch9Lgr9kzW"}
+
 ```
 
 #### Get URL
 
-> curl -L localhost/kc6fc
+> curl -L http://localhost/Ch9Lgr9kzW
 ```
 ... Redirect to https://ya.ru
 ```
