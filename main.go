@@ -18,17 +18,22 @@ func main() {
 
 func startApp() {
 	fmt.Println("Starting app")
+	expiration := utils.GetEnvInt("DEFAULT_STORAGE_EXPIRATION_HOURS", 720)
+	tinyhost := utils.GetEnv("TINY_HOST", "http://localhost")
+
 	appHandler := &handlers.UrlHandler{
 		//TODO: add config to choose storage
 		/*Storage: &storage.LocalMemoryStorage{
 			Store: make(map[string]string),
 		},*/
+
 		Storage: &storage.RedisStorage{
 			Client:     db.CreateRedisClient(),
 			Context:    context.Background(),
-			Expiration: 48 * time.Hour,
+			Expiration: time.Duration(expiration) * time.Hour,
 		},
 		Generator: &generators.SimpleRandGenerator{},
+		TinyHost:  tinyhost,
 	}
 
 	fmt.Println("Starting fasthttp")

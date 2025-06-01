@@ -7,7 +7,7 @@ A simple tinyUrl
 
 #### Create URL
 
-> curl -d '{"url":"https://ya.ru"}' localhost/short && echo
+> curl -d '{"url":"https://ya.ru"}' localhost/api/v1/shortUrl && echo
 ```
 URL created!
 "{\"url\":\"https://ya.ru\",\"short\":\"kc6fc\"}"
@@ -21,7 +21,7 @@ URL created!
 ```
 
 #### Default expiration
-- 48 hours
+- 720 hours
 ---
 
 ## Docker usage
@@ -30,4 +30,4 @@ URL created!
 > docker-compose up
 
 To rebuild use this cmd
-> docker-compose -f docker-compose.yml up -d --no-deps --build
+> docker-compose -f docker-compose.yml up -d --build

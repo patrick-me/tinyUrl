@@ -8,6 +8,5 @@ type URLRequest struct {
 }
 
 type URLResponse struct {
-	Url   string `json:"url"`
-	Short string `json:"short"`
+	Url string `json:"shortUrl"`
 }

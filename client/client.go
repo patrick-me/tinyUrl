@@ -29,7 +29,7 @@ func (c *TinyUrlClientImpl) CreateShortURL(original string, expirationInHours ti
 	}
 
 	req, err := http.NewRequest(
-		"POST", c.TinyURLOrigin+"/short", bytes.NewBuffer(body),
+		"POST", c.TinyURLOrigin+handlers.APIV1ShortURL, bytes.NewBuffer(body),
 	)
 
 	resp, err := c.Client.Do(req)
@@ -60,7 +60,7 @@ func (c *TinyUrlClientImpl) CreateShortURL(original string, expirationInHours ti
 		return "", err
 	}
 
-	return c.TinyURLOrigin + "/" + urlResp.Short, nil
+	return urlResp.Url, nil
 }
 
 func CreateTinyUrlClient(origin string) *TinyUrlClientImpl {
