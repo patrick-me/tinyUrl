@@ -9,16 +9,22 @@ import (
 	"strings"
 )
 
+const (
+	APIV1ShortURL = "/api/v1/shortUrl"
+)
+
 type UrlHandler struct {
 	Storage   storage.Storage
 	Generator generators.URLGenerator
+	TinyHost  string
 }
 
 func (h *UrlHandler) Router(ctx *fasthttp.RequestCtx) {
 
 	if ctx.IsPost() {
+
 		switch string(ctx.Path()) {
-		case "/short":
+		case APIV1ShortURL:
 			createShortUrlHandler(ctx, h)
 		default:
 			ctx.Error("Unsupported path", fasthttp.StatusNotFound)
@@ -76,7 +82,7 @@ func createShortUrlHandler(ctx *fasthttp.RequestCtx, h *UrlHandler) {
 	}
 	h.Storage.Save(shortURL, urlRequest.Url, urlRequest.ExpirationInHours)
 
-	data, _ := json.Marshal(&URLResponse{Url: urlRequest.Url, Short: shortURL})
+	data, _ := json.Marshal(&URLResponse{Url: h.TinyHost + "/" + shortURL})
 
 	ctx.SetStatusCode(fasthttp.StatusCreated)
 	ctx.SetBody(data)

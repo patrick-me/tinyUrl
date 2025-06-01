@@ -12,6 +12,8 @@ services:
       DEFAULT_URL_LEN: 10
       REDIS_ADDR: "redis:6379"
       REDIS_PASSWORD: ""
+      DEFAULT_STORAGE_EXPIRATION_HOURS: 720
+      TINY_HOST: "http://localhost"
     ports:
       - "80:8080"
     networks:
