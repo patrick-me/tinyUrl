@@ -1,21 +1,22 @@
-FROM golang:1.21-alpine
+FROM golang:1.25-alpine AS build
 
-WORKDIR /tinyurl
+WORKDIR /src
 
-COPY generators ./generators
-COPY handlers ./handlers
-COPY storage ./storage
-COPY utils ./utils
-COPY db ./db
+# With a vendor/ directory in the context Go builds offline (-mod=vendor is
+# picked up automatically); without it the modules are fetched per go.sum.
+COPY . .
 
-COPY main.go ./
-COPY go.mod ./
+RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/tiny .
 
-RUN go mod download
-RUN go mod tidy
 
-RUN go build -o /tiny
+FROM alpine:3.22
 
-CMD [ "/tiny" ]
+RUN adduser -D -u 10001 tiny
+
+COPY --from=build /out/tiny /usr/local/bin/tiny
+
+USER tiny
 
 EXPOSE 8080
+
+CMD [ "tiny" ]
