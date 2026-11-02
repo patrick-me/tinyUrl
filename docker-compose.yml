@@ -20,24 +20,31 @@ services:
       - tinyurl-net
     depends_on:
       - redis
+    logging: &logging
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 
   redis:
     container_name: tinyurl_redis
-    command: redis-server --appendonly yes #saving written data to volume
+    # Valkey speaks the Redis protocol, has no modules and is ~17 MB.
+    # Its data files are not compatible with Redis 8, hence the new volume
+    # (see "Upgrading from the Redis 8 image" in the README).
+    image: valkey/valkey:8-alpine
+    command: valkey-server --appendonly yes #saving written data to volume
     hostname: redis
-    build:
-      context: ./
-      dockerfile: docker/redis/Dockerfile
     restart: always
     volumes:
-      - redis-data:/data
+      - valkey-data:/data
     networks:
       - tinyurl-net
+    logging: *logging
 
 
 volumes:
-  redis-data:
+  valkey-data:
     driver: local
 
 
