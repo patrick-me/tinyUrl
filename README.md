@@ -55,8 +55,8 @@ once:
    ```
    docker run -d --name tinyurl_redis_old -v tinyurl_redis-data:/data redis:8-alpine redis-server --appendonly yes
    ```
-3. Copy the keys. It takes about 25 seconds per 10,000 keys and ends with
-   `ok`, or exits with an error if any key did not make it.
+3. Copy the keys. The script ends with `ok`, or exits with an error if any
+   key did not make it.
    ```
    scripts/copy-redis-keys.sh tinyurl_redis_old tinyurl_redis
    ```
